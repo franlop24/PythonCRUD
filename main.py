@@ -44,14 +44,37 @@ def list_clients():
         ))
 
 
-def update_client(client_name, updated_client_name):
+def update_client(client_id):
     global clients
+    client_id = int(client_id)
 
-    if client_name in clients:
-        index = clients.index(client_name)
-        clients[index] = updated_client_name
+    if client_id > len(clients):
+        return
+    
+    client_to_update = clients[client_id]
+    print(f'{client_id}: {client_to_update["name"]}')
+
+    choise = input('Is the cliend do you want to Update? [y/n]')
+    
+    if choise == 'y':
+        choise = input(f"client name: { client_to_update['name'] } \n Update name? [y/n]")
+        if choise == 'y':
+            client_to_update['name'] = _get_client_field('name')
+
+        choise = input(f"client company: { client_to_update['company'] } \n Update company? [y/n]")
+        if choise == 'y':
+            client_to_update['company'] = _get_client_field('company')
+
+        choise = input(f"client email: { client_to_update['email'] } \n Update email [y/n]")
+        if choise == 'y':
+            client_to_update['email'] = _get_client_field('email')
+
+        choise = input(f"client position: { client_to_update['position'] } \n Update position [y/n]")
+        if choise == 'y':
+
+            client_to_update['position'] = _get_client_field('position')
     else:
-        print('Client is not in client list')
+        print('Client is not updated')
 
 
 def delete_client(client_id):
@@ -123,13 +146,13 @@ if __name__ == '__main__':
         create_client(client)
     elif command == 'D':
         list_clients()
-        id_client = input('What is the client ID do you want to delete? ')
+        id_client = input('What is the client ID do you want to Delete? ')
         delete_client(id_client)
         list_clients()
     elif command == 'U':
-        client_name = _get_client_name()
-        updated_client_name = input('What is the updated client name? ')
-        update_client(client_name, updated_client_name)
+        list_clients()
+        id_client = input('What is the client ID do you want to Update? ')
+        update_client(id_client)
     elif command == 'L':
         list_clients()
     elif command == 'S':
